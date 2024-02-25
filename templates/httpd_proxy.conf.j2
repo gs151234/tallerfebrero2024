@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+
+    ProxyPass / http://192.168.56.10:8080/
+
+    ProxyPassReverse / http://192.168.56.10:8080/
+
+
+</VirtualHost>

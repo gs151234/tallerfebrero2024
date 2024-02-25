@@ -1,0 +1,76 @@
+---
+- name: Instalar OpenJDK y Tomcat 8 en Rocky Linux
+  hosts: rocky
+  user: ansible
+  become: true
+
+  tasks:
+    - name: Instalar OpenJDK
+      ansible.builtin.yum:
+        name: java-11-openjdk-devel
+        state: present
+
+    - name: Descargar Tomcat 8
+      get_url:
+        url: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.73/bin/apache-tomcat-8.5.73.tar.gz
+        dest: /tmp/apache-tomcat-8.5.73.tar.gz
+
+    - name: Instalar tar y wget
+      ansible.builtin.yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - tar
+        - wget
+        
+    - name: Descomprimir Tomcat
+      ansible.builtin.unarchive:
+        src: /tmp/apache-tomcat-8.5.73.tar.gz
+        dest: /opt/
+        remote_src: yes
+
+    - name: Crear grupo apache
+      ansible.builtin.group:
+        name: apache
+        state: present    
+
+    - name: Crear usuario apache
+      ansible.builtin.user:
+        name: apache
+        shell: /bin/nologin
+        groups: apache
+        home: /opt/apache-tomcat-8.5.73
+
+    - name: Establecer permisos
+      ansible.builtin.file:
+        path: /opt/apache-tomcat-8.5.73
+        state: directory
+        recurse: yes
+        owner: apache
+        group: apache
+
+    - name: Iniciar Tomcat
+      ansible.builtin.command:
+        cmd: /opt/apache-tomcat-8.5.73/bin/startup.sh
+      async: 300
+      poll: 0
+      become: false
+
+    - name: Habilitar puerto 8080/tcp
+      ansible.posix.firewalld:
+        port: 8080/tcp
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Copiar archivo tomcat.service al Tomcat
+      ansible.builtin.template:
+        src: tomcat.service.j2
+        dest: /etc/systemd/system/tomcat.service
+          
+
+    - name: Iniciar servicio tomcat
+      ansible.builtin.systemd:
+        name: tomcat
+        state: started
+        enabled: true

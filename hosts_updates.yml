@@ -1,0 +1,26 @@
+- hosts: linux
+  user: ansible
+  become: true
+
+  tasks:
+
+  - name: Update packages in Rocky Linux
+    ansible.builtin.yum:
+      name: "*"
+      state: latest
+    when: ansible_os_family == "RedHat"
+    notify: Reboot server
+
+  - name: Update packages in Ubuntu Linux
+    ansible.builtin.apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+    notify: Reboot server
+
+  
+  handlers: 
+  - name: Reboot server
+    ansible.builtin.reboot:
+      reboot_timeout: 300

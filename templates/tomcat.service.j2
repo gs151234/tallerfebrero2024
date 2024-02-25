@@ -1,0 +1,17 @@
+[Unit]
+Description=Apache Tomcat
+After=network.target
+
+[Service]
+Type=forking
+
+ExecStart=/opt/apache-tomcat-8.5.73/bin/startup.sh
+ExecStop=/opt/apache-tomcat-8.5.73/bin/shutdown.sh
+
+User=apache
+Group=apache
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
