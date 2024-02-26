@@ -28,13 +28,6 @@
             line: "PasswordAuthentication no"
     notify: Reiniciar servidor ssh
 
-    
-  handlers:
-  - name: Reiniciar servidor ssh
-    ansible.builtin.systemd:
-      state: restarted
-      name: sshd
-
   - name: Crear usuario Ansible
     ansible.builtin.user:
       name: ansible
@@ -51,3 +44,12 @@
       user: ansible
       state: present
       key: "{{ lookup('file', '/home/sysadmin/.ssh/id_rsa.pub') }}"
+    
+    
+  handlers:
+  - name: Reiniciar servidor ssh
+    ansible.builtin.systemd:
+      state: restarted
+      name: sshd
+
+
