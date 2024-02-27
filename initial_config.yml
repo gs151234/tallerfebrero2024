@@ -14,14 +14,14 @@
       state: present
       key: "{{ lookup('file', '/home/sysadmin/.ssh/id_rsa.pub') }}"
 
-  - name: desabilitar login de root por ssh
+  - name: Desabilitar login de root por ssh
     ansible.builtin.lineinfile:
             path: /etc/ssh/sshd_config
             regexp: '^PermitRootLogin'
             line: "PermitRootLogin no"
     notify: Reiniciar servidor ssh
 
-  - name: desabilitar login por password
+  - name: Desabilitar login por password
     ansible.builtin.lineinfile:
             path: /etc/ssh/sshd_config
             regexp: '^PasswordAuthentication'
