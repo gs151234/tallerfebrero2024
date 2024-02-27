@@ -35,7 +35,7 @@ o	instala las aplicaciones OpenJDK11 y Apache-tomcat-8.5.73 con las configuracio
 
 -	reverse_proxy.yml
 
-o	Instala Apache2, habilita los módulos proxy y proxy_http. Utiliza desde templates el archivo para ka configuración del virtualhost. Activa el sitio. Activa y configura el firewall, en este caso UFW, habilitando los puertos 22, 80 y 443.
+o	Instala Apache2, habilita los módulos proxy y proxy_http. Utiliza desde templates el archivo para la configuración del virtualhost. Activa el sitio. Activa y configura el firewall, en este caso UFW, habilitando los puertos 22, 80 y 443.
 
 
 
