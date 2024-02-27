@@ -76,10 +76,12 @@ drwxrwxr-x. 2 sysadmin sysadmin    58 Feb 25 20:20 templates
 
 ```
 
-Comenzamos con la ejecución de Playbooks con la configuración inicial
+Comenzamos con la ejecución de Playbooks con la configuración inicial. 
+Por ser la primera vez que nos conectamos utilizamos la contraseña para acceder por SSH y
+la contraseña para pasar a tener permisos SUDO
 
 ```
-$ ansible-playbook -i inventories/hosts initial_config.yml
+$ ansible-playbook -i inventories/hosts initial_config.yml --ask-pass --ask-become-pass
 ```
 
 Seguimos por las updates
