@@ -31,12 +31,6 @@
         cmd: a2ensite "{{ http_conf }}"
       notify: Reiniciar apache2
 
-  handlers:
-    - name: Reiniciar apache2
-      ansible.builtin.systemd:
-        name: apache2
-        state: restarted
-
 
     - name: Instalar UFW      
       ansible.builtin.apt:
@@ -56,3 +50,14 @@
     - name: Habilitar UFW
       community.general.ufw:        
         state: enabled
+      notify: Reboot server
+ 
+  handlers:
+    - name: Reiniciar apache2
+      ansible.builtin.systemd:
+        name: apache2
+        state: restarted
+    
+    - name: Reboot server
+      ansible.builtin.reboot:
+        reboot_timeout: 300
