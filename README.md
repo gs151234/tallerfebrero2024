@@ -43,12 +43,6 @@ o	Instala Apache2, habilita los módulos proxy y proxy_http. Utiliza desde templ
 
 ## USO
 
-Instalar Ansible
-
-En este caso se realizó desde una distribución con Rocky Linux
-```
-$ sudo dnf install ansible
-```
 Clonar el repositorio desde GitHub y validamos accediendo a la carpeta.
 
 ```
